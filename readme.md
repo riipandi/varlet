@@ -53,6 +53,16 @@ Varlet doesn't have `park` command like Laravel Valet does, your project files c
 
 Or, you can use the `varlet link` command and place your project files in any directory you want.
 
+### Varlet Commands
+
+| Command                      | Description
+| :--------------------------- | :----------
+| `varlet link`                | Create virtualhost from any directory
+| `varlet unlink`              | Remove virtualhost
+| `varlet start`               | Start Varlet service
+| `varlet stop`                | Stop Varlet service
+| `varlet restart`             | Restart Varlet service
+
 ### Current Issue
 
 Because Varlet need to modify Windows hosts file and manage Windows Services, you need to run `VarletUi.exe` and
@@ -74,20 +84,6 @@ Or, using Microsoft Visual Studio Build Tools:
 1. Download this file: <https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019>
 2. Run: `vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --quiet`
 3. For more detail, read more at [StackOverflow](https://stackoverflow.com/questions/42696948/how-can-i-install-the-vs2017-version-of-msbuild-on-a-build-server-without-instal).
-
-<!-- ## Varlet Commands
-
-| Command                      | Description
-| :--------------------------- | :----------
-| `varlet link`                  | Create virtualhost and serving the site
-| `varlet unlink`                | Remove virtualhost
-| `varlet forget`                | Remove both of virtualhost http and https
-| `varlet start`                 | Start Httpd service
-| `varlet stop`                  | Stop Httpd service
-| `varlet restart`               | Restart Httpd service
-| `varlet status`                | View site link status
-| `varlet service-status`        | View services status
-| `varlet switch-php _version_`  | Switch PHP version `7.4/7.3/7.2` -->
 
 ## License
 
