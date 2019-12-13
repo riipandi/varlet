@@ -3,7 +3,9 @@
   <a href="https://github.com/riipandi/varlet/releases">
     <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/riipandi/varlet?style=flat-square&sort=semver">
   </a>
-  <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/riipandi/varlet/total?style=flat-square">
+  <a href="https://github.com/riipandi/varlet/releases/latest">
+      <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/riipandi/varlet/total?style=flat-square">
+  </a>
   <a href="https://choosealicense.com/licenses/apache-2.0/" target="_blank">
     <img alt="Apache License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square">
   </a>
