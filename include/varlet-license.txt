@@ -1,0 +1,23 @@
+Copyright (C) 2019 Aris Ripandi.
+
+Except where otherwise noted, all of the documentation and software included
+in the Varlet package is copyrighted by Aris Ripandi.
+
+Varlet is a compilation of free software, it's free of charge and it's free
+to copy under the terms of the Apache 2.0 Licence. Please check every single
+licence of the contained products to get an overview of what is, and what
+isn't, allowed. In the case of commercial use please take a look at the
+product licences (especially MySQL), from the my point of view commercial
+use is also free.
+
+This software is provided "as-is," without any express or implied warranty.
+In no event shall the author be held liable for any damages arising from the
+use of this software.
+
+All other company and product names may be trademarks of their respective
+companies.
+
+
+Aris Ripandi
+aris [at] ripandi.id
+https://github.com/riipandi

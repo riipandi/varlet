@@ -1,0 +1,11 @@
+<service>
+  <id>VarletMailhog</id>
+  <name>Varlet Mailhog</name>
+  <description>Web and API based SMTP testing</description>
+  <executable><<INSTALL_DIR>>\pkg\mailhog\mailhog.exe</executable>
+  <!-- <arguments>-b 127.0.0.1:9001</arguments> -->
+  <logpath><<INSTALL_DIR>>\tmp\</logpath>
+  <logmode>reset</logmode>
+  <startmode><<SERVICE_MODE>></startmode>
+  <onfailure action="restart"/>
+</service>

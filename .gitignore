@@ -1,0 +1,39 @@
+# project files
+**/varlet.json
+**/varlet.ini
+*test.bat
+*test.iss
+.notes.txt
+[Tt]temp/
+[Oo]utput/
+_output/
+_dstdir/
+_dst32/
+_dst64/
+_tmpdir/
+varlet/
+
+# windows files
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.db
+*.lnk
+
+# vstudio project
+**/.vs
+**/.idea
+source/_build/
+source/**/bin/
+source/**/obj/
+source/**/packages/
+source/_debug/
+source/_release/
+source/_publish/
+source/packages/
+source_*/

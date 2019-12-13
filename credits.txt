@@ -1,0 +1,27 @@
+This file is a partial list of people who have contributed to the Varlet
+project. If you have contributed a patch or made some other contribution to
+this project, please submit a patch to this file to add yourself, and it will
+be done!
+
+The list is sorted by surname and formatted to allow easy grepping and
+beautification by scripts. The fields are: name (N), email (E), web-address
+(W), PGP key ID and fingerprint (P), description (D), snail-mail address
+(S), (T) Twitter username, and (I) IRC handle.
+
+
+N: Taylor Otwell
+W: https://laravel.com
+D: Thank you for awesome PHP Framework and their great ecosystem
+
+N: Leo Khoa
+W: https://laragon.org
+D: Inspiring me to provides flexible web development environment
+
+N: Jordan Russell’s Software
+W: http://www.jrsoftware.org/isinfo.php
+D: Inno setup is simple and robust installer platform
+
+N: Bubuh Bukhori
+W: https://www.bubuh.id
+D: Thank you for the outstanding artwork
+T: b_bubuh

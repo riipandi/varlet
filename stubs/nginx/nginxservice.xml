@@ -1,0 +1,16 @@
+<service>
+  <id>VarletNginx</id>
+  <name>Varlet Nginx</name>
+  <description>Varlet Nginx</description>
+  <executable><<INSTALL_DIR>>\nginx\nginx.exe</executable>
+  <startmode>Manual</startmode>
+  <startargument>-p</startargument>
+  <startargument><<INSTALL_DIR>>\nginx</startargument>
+  <stopexecutable><<INSTALL_DIR>>\nginx\nginx.exe</stopexecutable>
+  <stopargument>-p</stopargument>
+  <stopargument><<INSTALL_DIR>>\nginx</stopargument>
+  <stopargument>-s</stopargument>
+  <stopargument>stop</stopargument>
+  <logpath><<INSTALL_DIR>>\tmp\</logpath>
+  <logmode>reset</logmode>
+</service>

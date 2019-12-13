@@ -1,48 +1,75 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-valet.svg"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/riipandi/valet-windows"><img src="https://travis-ci.org/riipandi/valet-windows.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/riipandi/valet-windows"><img src="https://poser.pugx.org/riipandi/valet-windows/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/riipandi/valet-windows"><img src="https://poser.pugx.org/riipandi/valet-windows/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/riipandi/valet-windows"><img src="https://poser.pugx.org/riipandi/valet-windows/license.svg" alt="License"></a>
-</p>
-
+<p align="center"><img src="./source/Resources/logoWide.png" height="128px"></p>
 
 ## Introduction
 
-This is another fork of Laravel Valet for Windows. Valet is a Laravel development environment. No Vagrant,
-no `/etc/hosts` file. You can even share your sites publicly using local tunnels. Valet proxies all requests
-on the `*.test` domain to point to sites installed on your local machine.
+Varlet is a a web development environment for minimalists, inspired from [Laravel Valet](https://laravel.com/docs/valet)
+and [Laragon](https://laragon.org). Varlet only includes PHP, Composer, and HTTP web server. If you want to use databases
+like PostgreSQL, MariaDB/MySQL, Redis, you need to install them separately.
+
+Varlet is made for you, the developers who like to work in the terminal, like me!
+
+## What's in the box?
+
+- PHP 7.2 + 7.3
+- Apache HTTPD
+- Composer
+- xDebug
+- PHP Redis
+- ImageMagick
+- ionCube loader
+- Phalcon PHP extension
+- Mailhog + mhsendmail
+- Adminer db manager
+- Automatic https
 
 ## Quick Start
 
-Before installation, make sure that no other programs are binding to your local machine's port 80 and 443.
-Also make sure to open your preferred terminal (CMD, Git Bash, PowerShell, etc.) as Administrator. If you
-don't have PHP and composer installed, you can use [Varlet Core](//github.com/riipandi/varlet-core).
+To install Varlet you need [dotNet Framework](https://dotnet.microsoft.com/download/dotnet-framework) >= 4.5.2,
+then download [latest release](https://github.com/riipandi/varlet/releases) and run installation file.
 
-1. Install Valet with Composer via `composer global require riipandi/valet-windows-windows`
-2. Run the `valet install` command. This command will configure and install Valet and register Valet's daemon.
-3. If you're installing on Windows 10, you may need to manually configure Windows to use the Acrylic DNS proxy.
+Varlet doesn't have `park` command like Laravel Valet does, your project files can stored at:
+`installation_path\www`.
 
-#### Configure DNS via command prompt
+Or, you can use the `varlet link` command and place your project files in any directory you want.
 
-```cmd
-# Set DNS configuration
-netsh interface ipv4 add dnsservers "Ethernet" address=127.0.0.1 index=1
-netsh interface ipv4 add dnsservers "Wi-Fi" address=127.0.0.1 index=1
+## Building Packages
 
-# Revert DNS configuration
-netsh interface ipv4 set dns "Ethernet" dhcp
-netsh interface ipv4 set dns "Wi-Fi" dhcp
-```
+I'm using Rider from JetBrains, but you can use [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/#vstool-2019-family) too.
 
-## Official Documentation
+In summary, to compile without the need to have Visual Studio or Rider installed:
 
-Documentation for Valet can be found on the [Laravel website](//laravel.com/docs/valet).
+1. Download [JetBrains MSBuild](https://jb.gg/msbuild), extract to `C:\SDK\JetMSBuild`
+2. Download and install Microsoft [.NET Framework Developer Pack](https://dotnet.microsoft.com/download/dotnet-framework) 4.5.2 or later
+3. Download and install [Inno Setup](http://www.jrsoftware.org/isdl.php) (for creating the installer file)
+4. Finally, run `setup.bat` and enjoy a cup of coffee.
+
+Or, using Microsoft Visual Studio Build Tools:
+
+1. Download this file: <https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019>
+2. Run: `vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --quiet`
+3. For more detail, read more at [StackOverflow](https://stackoverflow.com/questions/42696948/how-can-i-install-the-vs2017-version-of-msbuild-on-a-build-server-without-instal).
+
+<!-- ## Varlet Commands
+
+| Command                      | Description
+| :--------------------------- | :----------
+| `varlet link`                  | Create virtualhost and serving the site
+| `varlet unlink`                | Remove virtualhost
+| `varlet forget`                | Remove both of virtualhost http and https
+| `varlet start`                 | Start Httpd service
+| `varlet stop`                  | Stop Httpd service
+| `varlet restart`               | Restart Httpd service
+| `varlet status`                | View site link status
+| `varlet service-status`        | View services status
+| `varlet switch-php _version_`  | Switch PHP version `7.4/7.3/7.2` -->
 
 ## License
 
-Laravel is a trademark of Taylor Otwel. Laravel Valet is open-sourced software licensed under the
-[MIT license](//opensource.org/licenses/MIT).
+Varlet is free software: you can distribute it and or modify it according to the license provided.
+Varlet is a compilation of free software, it's free of charge and it's free to copy under the terms
+of the [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/). Please check every
+single licence of the contained products to get an overview of what is, and what isn't, allowed.
+In the case of commercial use please take a look at the product licences (_especially MySQL_),
+from the my point of view commercial use is also free.
 
-Please read the [license file](./license.txt) for more information.
+Read the [licence file](./license.txt) file for the full Varlet license text.

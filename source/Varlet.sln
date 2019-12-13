@@ -1,0 +1,25 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VarletCli", "VarletCli\VarletCli.csproj", "{218E9208-BE61-48EF-B41F-037CACE6270D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VarletUi", "VarletUi\VarletUi.csproj", "{CEE0C950-B2DD-4CE9-B595-537D6B0F3289}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Variety", "Variety\Variety.shproj", "{BB06A7DA-53C4-461E-B2B0-32859A62510E}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {218E9208-BE61-48EF-B41F-037CACE6270D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {218E9208-BE61-48EF-B41F-037CACE6270D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {218E9208-BE61-48EF-B41F-037CACE6270D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {218E9208-BE61-48EF-B41F-037CACE6270D}.Release|Any CPU.Build.0 = Release|Any CPU
+        {218E9208-BE61-48EF-B41F-037CACE6270D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+        {CEE0C950-B2DD-4CE9-B595-537D6B0F3289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {CEE0C950-B2DD-4CE9-B595-537D6B0F3289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {CEE0C950-B2DD-4CE9-B595-537D6B0F3289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {CEE0C950-B2DD-4CE9-B595-537D6B0F3289}.Release|Any CPU.Build.0 = Release|Any CPU
+        {CEE0C950-B2DD-4CE9-B595-537D6B0F3289}.Release|Any CPU.Deploy.0 = Release|Any CPU
+    EndGlobalSection
+EndGlobal

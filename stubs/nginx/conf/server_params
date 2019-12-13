@@ -1,0 +1,7 @@
+# Global restrticttion
+location = /favicon.ico { log_not_found off; access_log off; allow all; }
+location = /robots.txt  { log_not_found off; access_log off; allow all; }
+location ~ \.well-known { log_not_found off; access_log off; allow all; }
+location ~ \.(htaccess|htpasswd|db|yml|log|svn|git|twig|cfg|conf|ini|tpl)$ {
+    return 444;
+}
