@@ -53,6 +53,11 @@ Varlet doesn't have `park` command like Laravel Valet does, your project files c
 
 Or, you can use the `varlet link` command and place your project files in any directory you want.
 
+### Current Issue
+
+Because Varlet need to modify Windows hosts file and manage Windows Services, you need to run `VarletUi.exe` and
+`varlet.exe` as Administrator.
+
 ## Building Packages
 
 I'm using Rider from JetBrains, but you can use [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/#vstool-2019-family) too.
