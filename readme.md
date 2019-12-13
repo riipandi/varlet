@@ -35,6 +35,12 @@ Varlet is made for you, the developers who like to work in the terminal, like me
 - Adminer db manager
 - Automatic https
 
+## Where is the databases?
+
+The Varlet package does not include database engines such as MariaDB / MySQL, PostgreSQL, or even Redis. You are free
+to install any database distribution as you wish. Or you can use our simplified database distribution at
+[Varlet Addons](https://github.com/riipandi/varlet-addons).
+
 ## Quick Start
 
 To install Varlet you need [dotNet Framework](https://dotnet.microsoft.com/download/dotnet-framework) >= 4.5.2,

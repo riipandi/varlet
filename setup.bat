@@ -66,7 +66,7 @@ goto :eof
 :choice
 echo. && set /P c="What do you want to do?: "
 for /F "tokens=*" %%i in ('%ROOT%\utils\sigcheck.exe -nobanner -q -n %ROOT%\_dst64\VarletUi.exe') do set ver_varlet=%%i
-if /I "%c%" EQU "r" ("%ROOT%\_output\varlet-%ver_varlet%-x64.exe")
+if /I "%c%" EQU "r" (START "installing" "%ROOT%\_output\varlet-%ver_varlet%-x64.exe")
 if /I "%c%" EQU "c" goto :clean_packages
 if /I "%c%" EQU "1" goto :build_setup
 if /I "%c%" EQU "2" goto :compile_app
