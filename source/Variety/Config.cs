@@ -8,9 +8,9 @@ namespace Variety
 {
     public static class Config
     {
-        public static readonly string DefaultDocumentRoot = References.AppRootPath(@"\www");
+        public static readonly string DefaultDocumentRoot = References.AppRootPath + @"\www";
 
-        public static void Initialize()
+        public static void Initialize(string configPath = null)
         {
             var data = new IniData();
 
@@ -22,11 +22,15 @@ namespace Variety
             data["App"]["DefaultPortHttps"] = "443";
             data["App"]["VhostExtension"] = ".test";
 
-            File.WriteAllText(References.AppConfigFile, data.ToString());
+            var file = References.AppConfigFile;
+            if (configPath != null) file = configPath;
+            File.WriteAllText(file, data.ToString());
         }
 
         public static string Get(string section, string key)
         {
+            if (!File.Exists(References.AppConfigFile)) Initialize();
+            
             var parser = new FileIniDataParser();
             var cfg = parser.ReadFile(References.AppConfigFile);
 
@@ -35,6 +39,8 @@ namespace Variety
 
         public static void Set(string section, string key, string value)
         {
+            if (!File.Exists(References.AppConfigFile)) Initialize();
+
             var parser = new FileIniDataParser();
             var data = parser.ReadFile(References.AppConfigFile);
             data[section][key] = value;

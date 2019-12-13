@@ -1,4 +1,6 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using System;
+using System.Threading.Tasks;
+using McMaster.Extensions.CommandLineUtils;
 using Variety;
 
 namespace VarletCli.Handler
@@ -8,7 +10,12 @@ namespace VarletCli.Handler
     {
         private void OnExecute(IConsole console)
         {
-            console.WriteLine($"\nThis is stop command\n");
+            ColorizeConsole.PrintlnInfo($"\n> Stopping services ...\n");
+            Services.Reload(References.ServiceNameHttp);
+            Task.Delay(TimeSpan.FromSeconds(3));
+            Services.Reload(References.ServiceNameSmtp);
+            Task.Delay(TimeSpan.FromSeconds(3));
+            ColorizeConsole.PrintlnInfo($"\n> Services stopped.\n");
         }
     }
 }

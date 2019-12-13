@@ -9,6 +9,7 @@
     <Import_RootNamespace>Variety</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ColorConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Hostfile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />

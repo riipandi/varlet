@@ -6,7 +6,7 @@
     <Deterministic>false</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <!-- <ApplicationManifest>Properties\app.manifest</ApplicationManifest> -->
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <ApplicationIcon>..\Resources\appIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
@@ -86,8 +86,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdCreateApp.cs" />
-    <Compile Include="CmdSiteManager.cs" />
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Handler\CmdInstallHandler.cs" />
     <Compile Include="Handler\CmdLinkHandler.cs" />

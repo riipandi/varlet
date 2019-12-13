@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Variety
 {
-    public class Utilities
+    public static class Utilities
     {
         public static void OpenWithNotepad(string file, bool runas = false)
         {
@@ -37,6 +37,15 @@ namespace Variety
                 sw.WriteLine(rows[i]);
             }
             sw.Close();
+        }
+
+        public static bool IsValidDomainName(string name)
+        {
+            try  {
+                return StringComparer.OrdinalIgnoreCase.Equals(new Uri("http://" + name).Host, name);
+            } catch (UriFormatException)  {
+                return false;
+            }
         }
     }
 }

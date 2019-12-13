@@ -8,9 +8,11 @@ namespace Variety
     public static class References
     {
         private static string AppRegistryPath { get; }
-        private const string AppConfigFileName = "varlet.ini";
         public const string ServiceNameHttp = "VarletHttpd";
         public const string ServiceNameSmtp = "VarletMailhog";
+
+        public static string AppConfigFile => AppRootPath + @"\varlet.ini";
+        public static string AppLogFile => AppRootPath + @"\varlet.log";
         public static string WwwDirectory => !string.IsNullOrEmpty(Config.Get("App", "DocumentRoot")) ?
             Config.Get("App", "DocumentRoot") : Config.DefaultDocumentRoot;
 
@@ -19,19 +21,15 @@ namespace Variety
             AppRegistryPath = @"HKLM\Software\Aris Ripandi\Varlet";
         }
 
-        public static string AppConfigFile
+        public static string AppNameSpace
         {
-            get {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                return path + @"\" + AppConfigFileName;
-            }
-        }
+            get
+            {
+                var appNameSpace = "VarletUi";
+                var appExeName = Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly()?.Location);
+                if (appExeName == "varlet.exe") appNameSpace = "VarletCli";
 
-        public static string AppLogFile
-        {
-            get {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                return path + @"\varlet.log";
+                return appNameSpace;
             }
         }
 
@@ -53,13 +51,17 @@ namespace Variety
             }
         }
 
-        public static string AppRootPath(string path)
+        public static string AppRootPath
         {
-            var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            if (!string.IsNullOrEmpty(path))  {
-                return appPath + path;
+            get {
+                var appExeName = Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly()?.Location);
+                var rootDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var appPath = rootDir;
+
+                if (appExeName == "varlet.exe") appPath = Directory.GetParent(rootDir).ToString();
+
+                return appPath;
             }
-            return appPath;
         }
 
         public static string ProgramFilesDir(string path)
@@ -84,6 +86,12 @@ namespace Variety
             source.Dispose();
             stream.Dispose();
             return fileContent;
+        }
+
+        public static string GetParent(string path)
+        {
+            var directoryInfo =  Directory.GetParent(path);
+            return directoryInfo.FullName;
         }
     }
 }

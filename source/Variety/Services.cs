@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using System.Linq;
-using System.Management;
+using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace Variety
@@ -65,6 +65,16 @@ namespace Variety
             var startMode = Convert.ToInt32(key.GetValue("Start"));
             key.Close();
             return startMode;
+        }
+
+        public static void Reload(string serviceName)
+        {
+            try {
+                if (!IsRunning(serviceName)) return;
+                Stop(serviceName);
+                Task.Delay(TimeSpan.FromSeconds(3));
+                Start(serviceName);
+            } catch (FormatException) {}
         }
     }
 }

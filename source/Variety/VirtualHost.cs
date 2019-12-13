@@ -6,10 +6,10 @@ namespace Variety
 {
     public static class VirtualHost
     {
-        private static readonly string ApacheConfDir = References.AppRootPath(@"\pkg\httpd\conf");
-        public static readonly string ApacheVhostDir = References.AppRootPath(@"\pkg\httpd\conf\vhost");
-        private static readonly string VhostTemplate = References.GetEmbeddedResourceContent("VarletUi.vhost.tpl.conf");
-        private static readonly string SslCertDir = References.AppRootPath(@"\pkg\httpd\conf\certs");
+        private static readonly string ApacheConfDir = References.AppRootPath + @"\pkg\httpd\conf";
+        public static readonly string ApacheVhostDir = References.AppRootPath + @"\pkg\httpd\conf\vhost";
+        private static readonly string SslCertDir = References.AppRootPath + @"\pkg\httpd\conf\certs";
+        public static readonly string VhostTemplate = References.GetEmbeddedResourceContent(References.AppNameSpace + ".vhost.tpl.conf");
 
         public static void SetDefaultVhost()
         {
@@ -82,7 +82,7 @@ namespace Variety
                 if (File.Exists(keyFile) || File.Exists(crtFile)) return;
                 var proc = new Process {StartInfo =
                 {
-                    FileName = References.AppRootPath(@"\utils\mkcert.exe"),
+                    FileName = References.AppRootPath + @"\utils\mkcert.exe",
                     Arguments = "-key-file "+keyFile+" -cert-file "+crtFile+" " + domain,
                     WindowStyle = ProcessWindowStyle.Hidden,
                     RedirectStandardInput = true,

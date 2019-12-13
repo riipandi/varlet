@@ -1,4 +1,6 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using System.IO;
+using McMaster.Extensions.CommandLineUtils;
+using Variety;
 using VarletCli.Handler;
 
 namespace VarletCli
@@ -8,7 +10,7 @@ namespace VarletCli
         Description = "Varlet is minimalism web development stack."),
         Subcommand(
             typeof(CmdStartHandler), typeof(CmdStopHandler), typeof(CmdRestartHandler),
-            typeof(CmdInstallHandler), typeof(CmdLinkHandler), typeof(CmdUnlinkHandler),
+            typeof(CmdInstallHandler), typeof(CmdLinkHandler), typeof(CmdUnlinkHandler), typeof(CmdListHandler),
             typeof(CmdShareHandler), typeof(CmdNewHandler), typeof(CmdVersionHandler)
         )
     ]

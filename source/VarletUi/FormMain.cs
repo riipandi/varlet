@@ -109,7 +109,7 @@ namespace VarletUi
 
         private void lblPhpIni_Click(object sender, EventArgs e)
         {
-            var file = References.AppRootPath(@"\pkg\php\"+cmbPhpVersion.Text+@"\php.ini");
+            var file = References.AppRootPath + @"\pkg\php\"+cmbPhpVersion.Text+@"\php.ini";
             if (!File.Exists(file))  {
                 MessageBox.Show("File "+file+" not found!");
             } else  {
@@ -119,7 +119,7 @@ namespace VarletUi
 
         private void lblApacheConfig_Click(object sender, EventArgs e)
         {
-            var path = References.AppRootPath(@"\pkg\httpd\conf");
+            var path = References.AppRootPath + @"\pkg\httpd\conf";
             if (!Directory.Exists(path)) return;
             var proc = new Process {StartInfo = {
                 FileName = "explorer.exe",  Arguments = path,  UseShellExecute = false
@@ -129,7 +129,7 @@ namespace VarletUi
 
         private void lblApacaheLog_Click(object sender, EventArgs e)
         {
-            var file = References.AppRootPath(@"\tmp\httpd_error.log");
+            var file = References.AppRootPath + @"\tmp\httpd_error.log";
             if (!File.Exists(file))  {
                 MessageBox.Show("File "+file+" not found!");
             } else  {
@@ -139,7 +139,7 @@ namespace VarletUi
 
         private void lblMailhogLog_Click(object sender, EventArgs e)
         {
-            var file = References.AppRootPath(@"\tmp\mailhogservice.err.log");
+            var file = References.AppRootPath + @"\tmp\mailhogservice.err.log";
             if (!File.Exists(file))  {
                 MessageBox.Show("File "+file+" not found!");
             } else  {
@@ -155,7 +155,7 @@ namespace VarletUi
 
         private void ListAvailablePhp()
         {
-            var pkgPhp = References.AppRootPath(@"\pkg\php");
+            var pkgPhp = References.AppRootPath + @"\pkg\php";
             if (!Directory.Exists(pkgPhp)) return;
             foreach (var t in Directory.GetDirectories(pkgPhp))  {
                 cmbPhpVersion.Items.Add(Path.GetFileName(t));
@@ -190,7 +190,7 @@ namespace VarletUi
 
         public void btnServices_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(References.AppRootPath(@"\pkg\httpd\conf\httpd.conf"))) {
+            if (!File.Exists(References.AppRootPath + @"\pkg\httpd\conf\httpd.conf")) {
                 MessageBox.Show("Apache configuration file not found!");
                 return;
             }
@@ -308,7 +308,7 @@ namespace VarletUi
 
         private void ChangePhpVersion()
         {
-            var cfgApache = References.AppRootPath(@"\pkg\httpd\conf\httpd.conf");
+            var cfgApache = References.AppRootPath + @"\pkg\httpd\conf\httpd.conf";
 
             const string keyword = "PHPVERSION";
             var oldVersion = Config.Get("App", "SelectedPhpVersion");
@@ -336,10 +336,10 @@ namespace VarletUi
             Utilities.ReplaceStringInFile(cfgApache, oldVersion, " \"" + newVersion + "\"");
 
             // Update PHP Version on Composer
-            var phpExe = References.AppRootPath(@"\pkg\php\"+newVersion+@"\php.exe");
-            var composerPhar = References.AppRootPath(@"\utils\composer.phar");
+            var phpExe = References.AppRootPath + @"\pkg\php\"+newVersion+@"\php.exe";
+            var composerPhar = References.AppRootPath + @"\utils\composer.phar";
             var content = "@echo off\n\""+phpExe+"\" \""+composerPhar+"\" %*";
-            File.WriteAllText(References.AppRootPath(@"\utils\composer.bat"), content);
+            File.WriteAllText(References.AppRootPath + @"\utils\composer.bat", content);
             Config.Set("App", "SelectedPhpVersion", cmbPhpVersion.Text);
         }
     }
