@@ -1,4 +1,14 @@
 <p align="center"><img src="./source/Resources/logoWide.png" height="128px"></p>
+<p align="center">
+  <a href="https://github.com/riipandi/varlet/releases">
+    <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/riipandi/varlet?style=flat-square&sort=semver">
+  </a>
+  <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/riipandi/varlet/total?style=flat-square">
+  <a href="https://choosealicense.com/licenses/apache-2.0/">
+    <img alt="Apache License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square">
+  </a>
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/riipandi/varlet?style=flat-square">
+</p>
 
 ## Introduction
 
@@ -10,7 +20,7 @@ Varlet is made for you, the developers who like to work in the terminal, like me
 
 ## What's in the box?
 
-- PHP 7.2 + 7.3
+- Multiple PHP v7.x
 - Apache HTTPD
 - Composer
 - xDebug
