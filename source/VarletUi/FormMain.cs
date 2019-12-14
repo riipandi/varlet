@@ -99,7 +99,7 @@ namespace VarletUi
 
         private void lblAbout_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/riipandi/varlet");
+            Process.Start("https://varlet.dev/");
         }
 
         private void lblMailhogOpen_Click(object sender, EventArgs e)
