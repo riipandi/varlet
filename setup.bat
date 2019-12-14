@@ -17,14 +17,15 @@ set "ver_php72=7.2.25"
 set "ver_php73=7.3.12"
 set "ver_php74=7.4.0"
 set "ver_imagick=7.0.7-11"
-set "ver_php_imagick=3.4.3"
+set "ver_php_imagick=3.4.4"
 set "ver_php_phalcon=3.4.5"
 set "ver_phpredis=5.1.1"
-set "ver_xdebug=2.8.0"
+set "ver_xdebug=2.9.0"
 set "ver_mkcert=1.4.1"
 set "ver_adminer=4.7.5"
 set "ver_mailhog=1.0.0"
 set "ver_mhsendmail=0.2.0"
+set "ver_phpmyadmin=4.9.2"
 
 :: Download link
 set "url_php72=https://windows.php.net/downloads/releases/php-%ver_php72%-Win32-VC15-x64.zip"
@@ -34,15 +35,15 @@ set "url_php74=https://windows.php.net/downloads/releases/php-%ver_php74%-Win32-
 set "url_phalcon_php72=https://github.com/phalcon/cphalcon/releases/download/v%ver_php_phalcon%/phalcon_x64_vc15_php7.2_%ver_php_phalcon%-4250.zip"
 set "url_phalcon_php73=https://github.com/phalcon/cphalcon/releases/download/v%ver_php_phalcon%/phalcon_x64_vc15_php7.3_%ver_php_phalcon%-4250.zip"
 
-set "url_imagick_php72=https://windows.php.net/downloads/pecl/snaps/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.2-ts-vc15-x64.zip"
-set "url_imagick_php73=https://windows.php.net/downloads/pecl/snaps/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.3-ts-vc15-x64.zip"
-set "url_imagick_php74=https://windows.php.net/downloads/pecl/snaps/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.4-ts-vc15-x64.zip"
+set "url_imagick_php72=https://windows.php.net/downloads/pecl/releases/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.2-ts-vc15-x64.zip"
+set "url_imagick_php73=https://windows.php.net/downloads/pecl/releases/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.3-ts-vc15-x64.zip"
+set "url_imagick_php74=https://windows.php.net/downloads/pecl/releases/imagick/%ver_php_imagick%/php_imagick-%ver_php_imagick%-7.4-ts-vc15-x64.zip"
 
 set "url_phpredis_php72=https://windows.php.net/downloads/pecl/releases/redis/%ver_phpredis%/php_redis-%ver_phpredis%-7.2-ts-vc15-x64.zip"
 set "url_phpredis_php73=https://windows.php.net/downloads/pecl/releases/redis/%ver_phpredis%/php_redis-%ver_phpredis%-7.3-ts-vc15-x64.zip"
 set "url_phpredis_php74=https://windows.php.net/downloads/pecl/releases/redis/%ver_phpredis%/php_redis-%ver_phpredis%-7.4-ts-vc15-x64.zip"
 
-set "url_xdebug_php72=https://xdebug.org/files/php_xdebug-%ver_xdebug%beta2-7.2-vc15-x86_64.dll"
+set "url_xdebug_php72=https://xdebug.org/files/php_xdebug-%ver_xdebug%-7.2-vc15-x86_64.dll"
 set "url_xdebug_php73=https://xdebug.org/files/php_xdebug-%ver_xdebug%-7.3-vc15-x86_64.dll"
 set "url_xdebug_php74=https://xdebug.org/files/php_xdebug-%ver_xdebug%-7.4-vc15-x86_64.dll"
 
@@ -83,7 +84,7 @@ if not exist "%ODIR%\utils" mkdir "%ODIR%\utils" 2> NUL
 call %ROOT%\scripts\get_apache.bat
 call %ROOT%\scripts\get_php72.bat
 call %ROOT%\scripts\get_php73.bat
-call %ROOT%\scripts\get_php73.bat
+call %ROOT%\scripts\get_php74.bat
 call %ROOT%\scripts\get_ioncube.bat
 call %ROOT%\scripts\get_imagick.bat
 call %ROOT%\scripts\get_essential.bat
@@ -97,8 +98,6 @@ copy /Y "%ROOT%\utils\curl-ca-bundle.crt" "%ODIR%\utils\curl-ca-bundle.crt" > nu
 copy /Y "%ROOT%\utils\libcurl-x64.dll" "%ODIR%\utils\libcurl-x64.dll" > nul
 
 echo. && echo ^> Include the stubs ...
-copy /Y "%STUB%\config\php.ini" "%ODIR%\pkg\php\php-7.2-ts\php.ini" > nul
-copy /Y "%STUB%\config\php.ini" "%ODIR%\pkg\php\php-7.3-ts\php.ini" > nul
 copy /Y "%ROOT%\include\varlet-license.txt" "%ODIR%\license.txt" > nul
 copy /Y "%ROOT%\credits.txt" "%ODIR%\credits.txt" > nul
 xcopy "%STUB%\htdocs" "%ODIR%\www" /E /I /Y > nul

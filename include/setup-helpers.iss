@@ -451,6 +451,21 @@ begin
     FSWbemLocator := Unassigned;
 end;
 
+function VCRedist2010NotInstalled: Boolean;
+begin
+  Result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\10.0');
+end;
+
+function VCRedist2012NotInstalled: Boolean;
+begin
+  Result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\12.0');
+end;
+
+function VCRedist2015NotInstalled: Boolean;
+begin
+  Result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\14.0');
+end;
+
 procedure CreateEnvironmentVariable(Key: string; Value: string);
 begin
   if RegWriteStringValue(HKEY_CURRENT_USER, EnvironmentKey, Key, Value)

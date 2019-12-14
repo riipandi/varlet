@@ -128,16 +128,6 @@ begin
   CreateFooterText('{#AppWebsite}');
 end;
 
-function VCRedist2012NotInstalled: Boolean;
-begin
-  Result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\12.0');
-end;
-
-function VCRedist2015NotInstalled: Boolean;
-begin
-  Result := not RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\14.0');
-end;
-
 function IsHttpServicesRunning: Boolean;
 begin
   Result := IsServiceRunning('VarletHttpd');
@@ -165,8 +155,12 @@ begin
   FileReplaceString(BaseDir + '\pkg\php\php-7.3-ts\php.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
   FileReplaceString(BaseDir + '\pkg\php\php-7.3-ts\php.ini', '<<PHP_BASEDIR>>', PathWithSlashes(BaseDir + '\pkg\php\php-7.3-ts'));
 
+  // PHP 7.4
+  FileReplaceString(BaseDir + '\pkg\php\php-7.4-ts\php.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
+  FileReplaceString(BaseDir + '\pkg\php\php-7.4-ts\php.ini', '<<PHP_BASEDIR>>', PathWithSlashes(BaseDir + '\pkg\php\php-7.4-ts'));
+
   // Create composer.bat
-  Str := '@echo off' + #13#10#13#10 + '"'+BaseDir+'\pkg\php\php-7.3-ts\php.exe" "'+ExpandConstant('{app}\utils\composer.phar')+'" %*';
+  Str := '@echo off' + #13#10#13#10 + '"'+BaseDir+'\pkg\php\php-7.4-ts\php.exe" "'+ExpandConstant('{app}\utils\composer.phar')+'" %*';
   SaveStringToFile(BaseDir + '\utils\composer.bat', Str, False);
 end;
 
@@ -175,7 +169,7 @@ begin
   EnvAddPath(ExpandConstant('{app}\utils'));
   EnvAddPath(ExpandConstant('{app}\pkg\httpd\bin'));
   EnvAddPath(ExpandConstant('{app}\pkg\imagick\bin'));
-  EnvAddPath(ExpandConstant('{app}\pkg\php\php-7.3-ts'));
+  EnvAddPath(ExpandConstant('{app}\pkg\php\php-7.4-ts'));
   EnvAddPath(ExpandConstant('{userappdata}\Composer\vendor\bin'));
   CreateEnvironmentVariable('OPENSSL_CONF', ExpandConstant('{app}\pkg\httpd\conf\openssl.cnf'));
 end;
@@ -185,7 +179,7 @@ begin
   EnvRemovePath(ExpandConstant('{app}\utils'));
   EnvRemovePath(ExpandConstant('{app}\pkg\httpd\bin'));
   EnvRemovePath(ExpandConstant('{app}\pkg\imagick\bin'));
-  EnvRemovePath(ExpandConstant('{app}\pkg\php\php-7.3-ts'));
+  EnvRemovePath(ExpandConstant('{app}\pkg\php\php-7.4-ts'));
   EnvRemovePath(ExpandConstant('{userappdata}\Composer\vendor\bin'));
   RemoveEnvironmentVariable('OPENSSL_CONF');
 end;

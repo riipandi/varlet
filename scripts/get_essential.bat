@@ -72,9 +72,9 @@ if not exist "%TMPDIR%\phpmyadmin.zip" (
   echo. && echo ^> Downloading phpMyAdmin ...
   %CURL% -L# "https://phpmyadmin.net/downloads/phpMyAdmin-latest-english.zip" -o "%TMPDIR%\phpmyadmin.zip"
 )
-if exist "%TMPDIR%\ngrok-amd64.zip" (
+if exist "%TMPDIR%\phpmyadmin.zip" (
   echo. && echo ^> Extracting phpMyAdmin ...
   %UNZIP% x "%TMPDIR%\phpmyadmin.zip" -o"%TMPDIR%" -y > nul
+  xcopy "%TMPDIR%\phpMyAdmin-%ver_phpmyadmin%-english" "%ODIR%\opt\phpmyadmin" /E /I /Y > nul
   copy /Y "%STUB%\opt\phpmyadmin\config.inc.php" "%ODIR%\opt\phpmyadmin\config.inc.php" > nul
-  xcopy "%TMPDIR%\phpMyAdmin-4.9.2-english" %ODIR%\opt\phpmyadmin /E /I /Y > nul
 )

@@ -25,4 +25,6 @@ if exist "%TMPDIR%\php-%ver_php73%.zip" (
 
   %UNZIP% x "%TMPDIR%\imagick-%ver_php_imagick%-php73.zip" -o"%TMPDIR%\imagick_php73" -y > nul
   copy /Y "%TMPDIR%\imagick_php73\php_imagick.dll" "%ODIR%\pkg\php\php-7.3-ts\ext\php_imagick.dll" > nul
+
+  copy /Y "%STUB%\config\php.ini" "%ODIR%\pkg\php\php-7.3-ts\php.ini" > nul
 )

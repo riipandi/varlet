@@ -16,7 +16,7 @@ namespace Variety
 
             data["App"]["LastUpdateCheck"] = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             data["App"]["CloseMinimizeToTray"] = true.ToString();
-            data["App"]["SelectedPhpVersion"] = "php-7.3-ts";
+            data["App"]["SelectedPhpVersion"] = "php-7.4-ts";
             data["App"]["DocumentRoot"] = DefaultDocumentRoot;
             data["App"]["DefaultPortHttp"] = "80";
             data["App"]["DefaultPortHttps"] = "443";
@@ -30,7 +30,7 @@ namespace Variety
         public static string Get(string section, string key)
         {
             if (!File.Exists(References.AppConfigFile)) Initialize();
-            
+
             var parser = new FileIniDataParser();
             var cfg = parser.ReadFile(References.AppConfigFile);
 
