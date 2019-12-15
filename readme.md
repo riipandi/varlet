@@ -9,10 +9,9 @@
   <a href="https://choosealicense.com/licenses/apache-2.0/" target="_blank">
     <img alt="Apache License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square">
   </a>
-  <a href="https://github.com/riipandi/varlet/commits/">
-    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/riipandi/varlet?label=activity&style=flat-square">
+  <a href="https://spectrum.chat/varlet" target="_blank">
+    <img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg">
   </a>
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/riipandi/varlet?style=flat-square">
 </p>
 
 ## Introduction
