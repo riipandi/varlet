@@ -1,0 +1,34 @@
+#
+# This is the AcrylicHosts.txt file.
+#
+# The standard format is: IPADDRESS DOMAINNAME1 [DOMAINNAME2] [DOMAINNAME3] and DOMAINNAME3 are strings.
+# A line starting with the '#' character (and everything after it if it's found within a line) is considered a comment
+# and therefore ignored.
+#
+# Domain names can contain wildcard characters '*' (matches zero or more characters) and '?' (matches exactly one char):
+#
+# 127.0.0.1 ad.* ads.*
+# 127.0.0.1 /^ads?\..*$
+#
+# A '>' character at the beginning of a domain name is a convenient shortcut for representing all domain names ending
+# with what follows after that character. For example an entry like this one:
+#
+# 127.0.0.1 >google.com
+#
+# Is equivalent to:
+#
+# 127.0.0.1 google.com *.google.com
+#
+# NXDOMAIN responses and FORWARD entries can also be mapped to domain names using all of the possibilities (i.e.
+# wildcard characters & regular expressions) already explained above:
+#
+# NX www.google.com
+# NX >google.com
+# NX /^ads?\..*$
+#
+# FORWARD entries are always evaluated first and can be effectively used to specify exceptions to other rules. For
+# example a configuration like this one:
+#
+# FW >google.com
+# NX *
+#

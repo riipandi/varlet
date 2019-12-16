@@ -66,6 +66,7 @@ if exist "%TMPDIR%\acrylicdns.zip" (
   if exist "%ODIR%\pkg\acrylic" RD /S /Q "%ODIR%\pkg\acrylic"
   %UNZIP% x "%TMPDIR%\acrylicdns.zip" -o"%ODIR%\pkg\acrylic" -y > nul
   copy /Y "%STUB%\config\AcrylicConfiguration.ini" "%ODIR%\pkg\acrylic\AcrylicConfiguration.ini" > nul
+  copy /Y "%STUB%\config\AcrylicHosts.txt" "%ODIR%\pkg\acrylic\AcrylicHosts.txt" > nul
 )
 
 :: ngrok

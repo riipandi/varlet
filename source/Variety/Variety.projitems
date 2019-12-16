@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ColorConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DnsHostfile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Hostfile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />

@@ -79,13 +79,9 @@ namespace VarletUi
 
             if (Services.IsInstalled(References.ServiceNameDnsResolver)) {
                 pictStatusDnsResolver.BackColor = Red;
-                lblDnsHostFile.Enabled = false;
+                lblDnsHostFile.Enabled = true;
                 lblDnsLogFile.Enabled = true;
-                if (Services.IsRunning(References.ServiceNameDnsResolver)) {
-                    pictStatusDnsResolver.BackColor = Green;
-                    lblDnsHostFile.Enabled = true;
-                    lblDnsLogFile.Enabled = true;
-                }
+                if (Services.IsRunning(References.ServiceNameDnsResolver)) pictStatusDnsResolver.BackColor = Green;
             }
 
             if (Services.IsInstalled(References.ServiceNameSmtp)) {
@@ -226,6 +222,7 @@ namespace VarletUi
             var files = (new DirectoryInfo(VirtualHost.ApacheVhostDir)).GetFiles("auto.*.conf");
             foreach(var file in files ) {
                 var domain = file.Name.Replace("auto.", "").Replace(".conf", "");
+                if (!DnsHostfile.IsNotExists(domain)) DnsHostfile.DeleteRecord(domain);
                 if (!Hostfile.IsNotExists(domain)) Hostfile.DeleteRecord(domain);
                 File.Delete(file.FullName);
             }
@@ -240,6 +237,7 @@ namespace VarletUi
                 var domain = dirName + Config.Get("App", "VhostExtension");
                 VirtualHost.CreateCert(domain);
                 VirtualHost.CreateVhost(domain, dirPath, true);
+                if (DnsHostfile.IsNotExists(domain)) DnsHostfile.AddRecord(domain);
                 if (Hostfile.IsNotExists(domain)) Hostfile.AddRecord(domain);
             }
             VirtualHost.SetDefaultVhost();
@@ -323,8 +321,6 @@ namespace VarletUi
                     if (!Services.IsRunning(References.ServiceNameDnsResolver)) {
                         pictStatusDnsResolver.BackColor = Color.Red;
                         btnServices.Text = "Start Services";
-                        lblDnsHostFile.Enabled = true;
-                        lblDnsLogFile.Enabled = true;
                         CheckServiceStatus();
                         break;
                     }
@@ -387,13 +383,13 @@ namespace VarletUi
             Config.Set("App", "SelectedPhpVersion", cmbPhpVersion.Text);
         }
 
+        // cirina
         private void lblDnsHostFile_Click(object sender, EventArgs e)
         {
-            var file = References.AppRootPath + @"\pkg\acrylic\AcrylicHosts.txt";
-            if (!File.Exists(file))  {
-                MessageBox.Show("File "+file+" not found!");
+            if (!File.Exists(DnsHostfile.HostsFileName))  {
+                MessageBox.Show("File " + DnsHostfile.HostsFileName + " not found!");
             } else  {
-                Utilities.OpenWithNotepad(file);
+                DnsHostfile.OpenWithEditor();
             }
         }
 

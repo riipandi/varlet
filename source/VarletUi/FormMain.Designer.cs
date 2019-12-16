@@ -127,7 +127,7 @@
             this.lblDnsHostFile.Name = "lblDnsHostFile";
             this.lblDnsHostFile.Size = new System.Drawing.Size(94, 23);
             this.lblDnsHostFile.TabIndex = 16;
-            this.lblDnsHostFile.Text = "Hosts File";
+            this.lblDnsHostFile.Text = "Host File";
             this.lblDnsHostFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblDnsHostFile.Click += new System.EventHandler(this.lblDnsHostFile_Click);
             this.pictStatusDnsResolver.BackColor = System.Drawing.Color.DarkGray;

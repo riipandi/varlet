@@ -37,6 +37,7 @@ namespace VarletCli.Handler
             ColorizeConsole.PrintlnInfo($"\n> Creating virtualhost ...");
             VirtualHost.CreateCert(givenDomain);
             VirtualHost.CreateVhost(givenDomain, dirPath);
+            if (DnsHostfile.IsNotExists(givenDomain)) DnsHostfile.AddRecord(givenDomain);
             if (Hostfile.IsNotExists(givenDomain)) Hostfile.AddRecord(givenDomain);
 
             ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");

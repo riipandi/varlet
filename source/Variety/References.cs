@@ -7,7 +7,7 @@ namespace Variety
 {
     public static class References
     {
-        private static string AppRegistryPath { get; }
+        // public const string AppRegistryPath = @"HKLM\Software\Aris Ripandi\Varlet";
         public const string ServiceNameHttp = "VarletHttpd";
         public const string ServiceNameSmtp = "VarletMailhog";
         public const string ServiceNameDnsResolver = "AcrylicDNSProxySvc";
@@ -17,10 +17,6 @@ namespace Variety
         public static string WwwDirectory => !string.IsNullOrEmpty(Config.Get("App", "DocumentRoot")) ?
             Config.Get("App", "DocumentRoot") : Config.DefaultDocumentRoot;
 
-        static References()
-        {
-            AppRegistryPath = @"HKLM\Software\Aris Ripandi\Varlet";
-        }
 
         public static string AppNameSpace
         {
