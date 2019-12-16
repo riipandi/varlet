@@ -10,6 +10,7 @@ namespace Variety
         private static string AppRegistryPath { get; }
         public const string ServiceNameHttp = "VarletHttpd";
         public const string ServiceNameSmtp = "VarletMailhog";
+        public const string ServiceNameDnsResolver = "AcrylicDNSProxySvc";
 
         public static string AppConfigFile => AppRootPath + @"\varlet.ini";
         public static string AppLogFile => AppRootPath + @"\varlet.log";

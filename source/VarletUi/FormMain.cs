@@ -77,6 +77,17 @@ namespace VarletUi
                 }
             }
 
+            if (Services.IsInstalled(References.ServiceNameDnsResolver)) {
+                pictStatusDnsResolver.BackColor = Red;
+                lblDnsHostFile.Enabled = false;
+                lblDnsLogFile.Enabled = true;
+                if (Services.IsRunning(References.ServiceNameDnsResolver)) {
+                    pictStatusDnsResolver.BackColor = Green;
+                    lblDnsHostFile.Enabled = true;
+                    lblDnsLogFile.Enabled = true;
+                }
+            }
+
             if (Services.IsInstalled(References.ServiceNameSmtp)) {
                 pictMailhogStatus.BackColor = Red;
                 lblMailhogOpen.Enabled = false;
@@ -257,6 +268,21 @@ namespace VarletUi
                 }
             }
 
+            if (Services.IsInstalled(References.ServiceNameDnsResolver)) {
+                while (!Services.IsRunning(References.ServiceNameDnsResolver))  {
+                    btnServices.Text = "Starting Services";
+                    Services.Start(References.ServiceNameDnsResolver);
+                    if (Services.IsRunning(References.ServiceNameDnsResolver)) {
+                        pictStatusDnsResolver.BackColor = Color.Green;
+                        btnServices.Text = "Stop Services";
+                        lblDnsHostFile.Enabled = false;
+                        lblDnsLogFile.Enabled = false;
+                        CheckServiceStatus();
+                        break;
+                    }
+                }
+            }
+
             if (Services.IsInstalled(References.ServiceNameSmtp)) {
                 while (!Services.IsRunning(References.ServiceNameSmtp))  {
                     btnServices.Text = "Starting Services";
@@ -290,6 +316,22 @@ namespace VarletUi
                     }
                 }
             }
+
+            if (Services.IsInstalled(References.ServiceNameDnsResolver)) {
+                while (Services.IsRunning(References.ServiceNameDnsResolver))  {
+                    btnServices.Text = "Stopping Services";
+                    Services.Stop(References.ServiceNameDnsResolver);
+                    if (!Services.IsRunning(References.ServiceNameDnsResolver)) {
+                        pictStatusDnsResolver.BackColor = Color.Red;
+                        btnServices.Text = "Start Services";
+                        lblDnsHostFile.Enabled = true;
+                        lblDnsLogFile.Enabled = true;
+                        CheckServiceStatus();
+                        break;
+                    }
+                }
+            }
+
             if (Services.IsInstalled(References.ServiceNameSmtp)) {
                 while (Services.IsRunning(References.ServiceNameSmtp))  {
                     btnServices.Text = "Stopping Services";
@@ -341,6 +383,26 @@ namespace VarletUi
             var content = "@echo off\n\""+phpExe+"\" \""+composerPhar+"\" %*";
             File.WriteAllText(References.AppRootPath + @"\utils\composer.bat", content);
             Config.Set("App", "SelectedPhpVersion", cmbPhpVersion.Text);
+        }
+
+        private void lblDnsHostFile_Click(object sender, EventArgs e)
+        {
+            var file = References.AppRootPath + @"\pkg\acrylic\AcrylicHosts.txt";
+            if (!File.Exists(file))  {
+                MessageBox.Show("File "+file+" not found!");
+            } else  {
+                Utilities.OpenWithNotepad(file);
+            }
+        }
+
+        private void lblDnsLogFile_Click(object sender, EventArgs e)
+        {
+            var file = References.AppRootPath + @"\tmp\AcrylicDNSHitLog.txt";
+            if (!File.Exists(file))  {
+                MessageBox.Show("File "+file+" not found!");
+            } else  {
+                Utilities.OpenWithNotepad(file);
+            }
         }
     }
 }

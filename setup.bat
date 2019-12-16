@@ -52,11 +52,12 @@ set "url_xdebug_php74=https://xdebug.org/files/php_xdebug-%ver_xdebug%-7.4-vc15-
 :menu
 for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do rem"') do (set "DEL=%%a")
 <nul set /p=""
-call :PainText 02 "=====================================================" && echo. &
-call :PainText 02 "=  1 - Build setup files       c - Clean packages    " && echo. &
-call :PainText 02 "=  2 - Compile varlet app      r - Run installer     " && echo. &
-call :PainText 02 "=  3 - Compile installer       x - Exit              " && echo. &
-call :PainText 02 "====================================================="
+call :PainText 02 "=========================================================" && echo. &
+call :PainText 02 "=  1 - Build setup files           c - Clean packages    " && echo. &
+call :PainText 02 "=  2 - Compile varlet app          r - Run installer     " && echo. &
+call :PainText 02 "=  3 - Compile installer           x - Exit              " && echo. &
+call :PainText 02 "=  4 - Create portable package                           " && echo. &
+call :PainText 02 "========================================================="
 goto :choice
 
 :PainText
@@ -73,6 +74,7 @@ if /I "%c%" EQU "c" goto :clean_packages
 if /I "%c%" EQU "1" goto :build_setup
 if /I "%c%" EQU "2" goto :compile_app
 if /I "%c%" EQU "3" goto :compile_inno
+if /I "%c%" EQU "3" goto :create_archive
 if /I "%c%" EQU "x" goto :quit
 goto :choice
 
@@ -103,6 +105,8 @@ copy /Y "%ROOT%\include\varlet-license.txt" "%ODIR%\license.txt" > nul
 copy /Y "%ROOT%\credits.txt" "%ODIR%\credits.txt" > nul
 xcopy "%STUB%\htdocs" "%ODIR%\www" /E /I /Y > nul
 xcopy "%STUB%\opt" "%ODIR%\opt" /E /I /Y > nul
+del /F "%ODIR%\www\404.html"
+del /F "%ODIR%\www\50x.html"
 
 echo. && goto :menu
 
@@ -160,13 +164,16 @@ echo. && goto :menu
 echo. && echo ^> Compiling installer files ...
 for /R "%ODIR%" %%G in (*.pdb) do "cmd /c del /F %%G"
 "%programfiles(x86)%\Inno Setup 6\ISCC.exe" /Qp "%ROOT%\installer.iss"
+echo. && echo. && echo Setup file has been created!
+echo. && goto :menu
 
+:create_archive
 echo. && echo ^> Compressing varlet portable ...
 for /F "tokens=*" %%i in ('%ROOT%\utils\sigcheck.exe -nobanner -q -n %ROOT%\_dst64\VarletUi.exe') do set ver_varlet=%%i
 if exist "%ROOT%\_output\varlet-%ver_varlet%-x64.7z" ( del /F "%ROOT%\_output\varlet-%ver_varlet%-x64.7z" )
 %UNZIP% a -r -bsp1 -t7z "%ROOT%\_output\varlet-%ver_varlet%-x64.7z" "%ROOT%\_dst64"
 %UNZIP% rn "%ROOT%\_output\varlet-%ver_varlet%-x64.7z" _dst64 varlet
-echo. && echo. && echo Setup file has been created!
+echo. && echo. && echo Archive has been created!
 echo. && goto :menu
 
 :: ---------------------------------------------------------------------------------------------------------------------

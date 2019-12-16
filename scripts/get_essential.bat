@@ -63,9 +63,9 @@ if not exist "%TMPDIR%\acrylicdns.zip" (
 )
 if exist "%TMPDIR%\acrylicdns.zip" (
   echo. && echo ^> Extracting Acrylic DNS v%ver_acrylicdns% ...
-  if exist "%ODIR%\pkg\acrylicdns" RD /S /Q "%ODIR%\pkg\acrylicdns"
-  %UNZIP% x "%TMPDIR%\acrylicdns.zip" -o"%ODIR%\pkg\acrylicdns" -y > nul
-  copy /Y "%STUB%\config\AcrylicConfiguration.ini" "%ODIR%\pkg\acrylicdns\AcrylicConfiguration.ini" > nul
+  if exist "%ODIR%\pkg\acrylic" RD /S /Q "%ODIR%\pkg\acrylic"
+  %UNZIP% x "%TMPDIR%\acrylicdns.zip" -o"%ODIR%\pkg\acrylic" -y > nul
+  copy /Y "%STUB%\config\AcrylicConfiguration.ini" "%ODIR%\pkg\acrylic\AcrylicConfiguration.ini" > nul
 )
 
 :: ngrok

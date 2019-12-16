@@ -146,6 +146,7 @@ begin
 
   // httpd conf
   FileReplaceString(BaseDir + '\pkg\httpd\conf\httpd.conf', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
+  FileReplaceString(BaseDir + '\pkg\acrylic\AcrylicConfiguration.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
 
   // PHP 7.2
   FileReplaceString(BaseDir + '\pkg\php\php-7.2-ts\php.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
