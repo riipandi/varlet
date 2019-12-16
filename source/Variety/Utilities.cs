@@ -65,6 +65,7 @@ namespace Variety
                 if (File.Exists(fullPath))
                     return fullPath;
             }
+
             return null;
         }
     }

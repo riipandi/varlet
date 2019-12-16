@@ -178,17 +178,12 @@ namespace VarletUi
         public void btnTerminal_Click(object sender, EventArgs e)
         {
             var wwwDirectory = Config.Get("App", "DocumentRoot");
-            var defaultTerminal = Config.Get("App", "DefaultTerminal");
-
-            if (!Directory.Exists(wwwDirectory)) {
-                MessageBox.Show("Directory " + wwwDirectory + " doesn't exist!");
-                return;
-            }
+            if (!Directory.Exists(wwwDirectory)) wwwDirectory = References.AppRootPath;
 
             try {
-                var terminalApp = defaultTerminal;
+                var terminalApp = "pwsh.exe";
                 var terminalArg = "-NoLogo -WorkingDirectory \"" + wwwDirectory + "\"";
-                if (!Utilities.IsExistsOnPath(defaultTerminal)) {
+                if (!Utilities.IsExistsOnPath(terminalApp)) {
                     terminalApp = "cmd.exe";
                     terminalArg = "/k \"cd /d " + wwwDirectory + "\"";
                 }
