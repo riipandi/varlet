@@ -37,11 +37,11 @@ namespace VarletCli.Handler
             File.Delete(vhostFile);
             if (!DnsHostfile.IsNotExists(givenDomain)) DnsHostfile.DeleteRecord(givenDomain);
 
-            ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");
-            Services.Reload(References.ServiceNameHttp);
-            Task.Delay(TimeSpan.FromSeconds(5));
+            // ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");
+            // Services.Reload(References.ServiceNameHttp);
+            // Task.Delay(TimeSpan.FromSeconds(5));
 
-            ColorizeConsole.PrintlnSuccess($"\n> Your site has been removed.\n");
+            ColorizeConsole.PrintlnSuccess($"\n> Your site has been removed, please restart Varlet services in VarletUi!\n");
         }
     }
 }

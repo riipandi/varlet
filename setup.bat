@@ -74,7 +74,7 @@ if /I "%c%" EQU "c" goto :clean_packages
 if /I "%c%" EQU "1" goto :build_setup
 if /I "%c%" EQU "2" goto :compile_app
 if /I "%c%" EQU "3" goto :compile_inno
-if /I "%c%" EQU "3" goto :create_archive
+if /I "%c%" EQU "4" goto :create_archive
 if /I "%c%" EQU "x" goto :quit
 goto :choice
 

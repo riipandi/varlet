@@ -213,6 +213,7 @@ procedure InstallDNSResolverService;
 begin
   BaseDir := ExpandConstant('{app}');
   WizardForm.StatusLabel.Caption := 'Installing DNS Resolver ...';
+  if IsServiceInstalled('AcrylicDNSProxySvc') then KillService('AcrylicDNSProxySvc');
   FileReplaceString(BaseDir + '\pkg\acrylic\AcrylicConfiguration.ini', '<<INSTALL_DIR>>', ExpandConstant('{app}'));
   Exec(BaseDir + '\pkg\acrylic\AcrylicUI.exe', 'InstallAcrylicService', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   if WizardIsTaskSelected('task_autorun_service') then begin

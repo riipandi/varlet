@@ -14,7 +14,6 @@ namespace VarletCli.Handler
 
         private void OnExecute(IConsole console)
         {
-            // dirPath.Replace("\\", "/")
             var dirPath = Environment.CurrentDirectory;
             var dirName = Path.GetFileName(dirPath);
             var defaultExtension = Config.Get("App", "VhostExtension");
@@ -30,20 +29,22 @@ namespace VarletCli.Handler
 
             var vhostFile = VirtualHost.ApacheVhostDir + @"\" + givenDomain + ".conf";
             if (File.Exists(vhostFile))  {
-                ColorizeConsole.PrintlnWarning($"\n> VirtualHost already exists!\n");
+                ColorizeConsole.PrintlnError($"\n> VirtualHost already exists!\n");
                 return;
             }
 
             ColorizeConsole.PrintlnInfo($"\n> Creating virtualhost ...");
             VirtualHost.CreateCert(givenDomain);
-            VirtualHost.CreateVhost(givenDomain, dirPath);
+            VirtualHost.CreateVhost(givenDomain, dirPath.Replace("\\", "/"));
             if (DnsHostfile.IsNotExists(givenDomain)) DnsHostfile.AddRecord(givenDomain);
 
-            ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");
-            Services.Reload(References.ServiceNameHttp);
-            Task.Delay(TimeSpan.FromSeconds(5));
+            // TODO: services restart command still not working
+            // ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");
+            // Services.Reload(References.ServiceNameHttp);
+            // Task.Delay(TimeSpan.FromSeconds(5));
 
-            ColorizeConsole.PrintlnSuccess($"\n> Your site available at: http://{givenDomain}\n");
+            ColorizeConsole.PrintlnSuccess($"\n> Virtualhost has been created, please restart Varlet services in VarletUi!");
+            ColorizeConsole.PrintlnWarning($"> Your site will be available at: http://{givenDomain} and https://{givenDomain}\n");
         }
     }
 }

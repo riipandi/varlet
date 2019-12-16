@@ -8,11 +8,7 @@ namespace VarletCli
     [Command(
         Name = "varlet",
         Description = "Varlet is minimalism web development stack."),
-        Subcommand(
-            typeof(CmdStartHandler), typeof(CmdStopHandler), typeof(CmdRestartHandler),
-            typeof(CmdInstallHandler), typeof(CmdLinkHandler), typeof(CmdUnlinkHandler), typeof(CmdListHandler),
-            typeof(CmdShareHandler), typeof(CmdNewHandler), typeof(CmdVersionHandler)
-        )
+        Subcommand(typeof(CmdVersionHandler), typeof(CmdLinkHandler), typeof(CmdUnlinkHandler))
     ]
     class Program
     {
