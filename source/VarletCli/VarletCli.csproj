@@ -6,7 +6,7 @@
     <Deterministic>false</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <!-- <ApplicationManifest>Properties\app.manifest</ApplicationManifest> -->
     <ApplicationIcon>..\Resources\appIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
@@ -25,7 +25,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\_dst64\utils\</OutputPath>
+    <!-- <OutputPath>..\..\_dst64\utils\</OutputPath> -->
+    <OutputPath>C:\Varlet\utils\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,7 +35,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\_dst64\utils\</OutputPath>
+    <!-- <OutputPath>..\..\_dst64\utils\</OutputPath> -->
+    <OutputPath>C:\Varlet\utils\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>2</WarningLevel>
