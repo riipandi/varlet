@@ -18,6 +18,7 @@ namespace Variety
             data["App"]["CloseMinimizeToTray"] = true.ToString();
             data["App"]["SelectedPhpVersion"] = "php-7.4-ts";
             data["App"]["DocumentRoot"] = DefaultDocumentRoot;
+            data["App"]["DefaultTerminal"] = "cmd.exe";
             data["App"]["DefaultPortHttp"] = "80";
             data["App"]["DefaultPortHttps"] = "443";
             data["App"]["VhostExtension"] = ".test";
