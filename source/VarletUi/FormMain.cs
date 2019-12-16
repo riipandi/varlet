@@ -177,22 +177,25 @@ namespace VarletUi
 
         public void btnTerminal_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(References.WwwDirectory)) {
-                MessageBox.Show("Directory " + References.WwwDirectory + " doesn't exist!");
+            var wwwDir = Config.Get("App", "DocumentRoot");
+            if (!Directory.Exists(wwwDir)) {
+                MessageBox.Show("Directory " + wwwDir + " doesn't exist!");
                 return;
             }
 
-            if (Directory.Exists(References.ProgramFilesDir(@"\PowerShell"))) {
-                var proc = new Process {StartInfo = {
-                    FileName = "pwsh.exe",
-                    Arguments = "-NoLogo -WorkingDirectory \"" + References.WwwDirectory + "\"",
-                    UseShellExecute = false
-                }};
-                proc.Start();
-            } else  {
+            try {
+                if (Directory.Exists(References.ProgramFilesDir(@"\PowerShell"))) {
+                    var proc = new Process {StartInfo = {
+                        FileName = "pwsh.exe",
+                        Arguments = "-NoLogo -WorkingDirectory \"" + wwwDir + "\"",
+                        UseShellExecute = false
+                    }};
+                    proc.Start();
+                }
+            } catch (FormatException) {
                 var proc = new Process {StartInfo = {
                     FileName = "cmd.exe",
-                    Arguments = "/k \"cd /d " + References.WwwDirectory + "\"",
+                    Arguments = "/k \"cd /d " + wwwDir + "\"",
                     UseShellExecute = false
                 }};
                 proc.Start();
