@@ -254,10 +254,10 @@ begin
     InstallDNSResolverService;
     if WizardIsTaskSelected('task_install_mailhog') then InstallMailhogService;
     if WizardIsTaskSelected('task_add_path_envars') then CreatePathEnvironment;
+    if WizardIsTaskSelected('task_autorun_service') then StartAppServices;
   end;
   // When it's done
   if (CurStep=ssDone) then begin
-    if WizardIsTaskSelected('task_autorun_service') then StartAppServices;
     ShellExec('open', ExpandConstant('{app}\VarletUi.exe'), '', '', SW_SHOW, ewNoWait, ResultCode);
   end;
 end;
