@@ -204,17 +204,15 @@ namespace VarletUi
                 return;
             }
 
-            ChangePhpVersion();
             btnServices.Enabled = false;
             switch (btnServices.Text)
             {
                 case "Stop Services":
-                    btnServices.Enabled = false;
                     StoppingServices();
                     Refresh();
                     break;
                 case "Start Services":
-                    btnServices.Enabled = false;
+                    ChangePhpVersion();
                     AutoGenerateVhost();
                     StartingServices();
                     Refresh();
