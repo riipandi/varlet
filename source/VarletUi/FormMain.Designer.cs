@@ -218,7 +218,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(149, 23);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Apache Web Server";
+            this.label3.Text = "HTTP Server";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular,
                 System.Drawing.GraphicsUnit.Point, ((byte) (0)));
