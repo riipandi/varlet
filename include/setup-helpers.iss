@@ -1,3 +1,5 @@
+; (c) 2019 - Aris Ripandi
+
 [Code]
 type
   SERVICE_STATUS = record

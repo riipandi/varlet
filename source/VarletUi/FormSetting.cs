@@ -76,6 +76,9 @@ namespace VarletUi
                 if (Services.IsInstalled(References.ServiceNameHttp))
                     Services.ChangeStartMode(References.ServiceNameHttp, "auto");
 
+                if (Services.IsInstalled(References.ServiceNameDnsResolver))
+                    Services.ChangeStartMode(References.ServiceNameDnsResolver, "auto");
+
                 if (Services.IsInstalled(References.ServiceNameSmtp))
                     Services.ChangeStartMode(References.ServiceNameSmtp, "auto");
             } else  {
@@ -83,6 +86,9 @@ namespace VarletUi
                 {
                     if (Services.IsInstalled(References.ServiceNameHttp))
                         Services.ChangeStartMode(References.ServiceNameHttp, "demand");
+
+                    if (Services.IsInstalled(References.ServiceNameDnsResolver))
+                        Services.ChangeStartMode(References.ServiceNameDnsResolver, "demand");
 
                     if (Services.IsInstalled(References.ServiceNameSmtp))
                         Services.ChangeStartMode(References.ServiceNameSmtp, "demand");

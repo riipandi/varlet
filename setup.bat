@@ -179,8 +179,9 @@ echo. && goto :menu
 :: ---------------------------------------------------------------------------------------------------------------------
 :clean_packages
 echo. && echo ^> Removing old packages ...
+if exist "%ROOT%\_output" RD /S /Q "%ROOT%\_output"
 if exist "%TMPDIR%" RD /S /Q "%TMPDIR%"
-if exist "%ODIR%" RD /S /Q "%ODIR%"
+if exist "%TMPDIR%" RD /S /Q "%TMPDIR%"
 echo. && goto :menu
 
 :: ---------------------------------------------------------------------------------------------------------------------

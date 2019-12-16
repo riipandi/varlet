@@ -68,5 +68,15 @@ namespace Variety
 
             return null;
         }
+
+        // public static string GetActiveNic()
+        // {
+        //     // do something
+        // }
+
+        // public static void SetDnsResolver(string activeNic, string primaryDns = "dhcp", string secondaryDns = null)
+        // {
+        //     // do something
+        // }
     }
 }

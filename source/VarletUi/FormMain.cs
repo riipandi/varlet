@@ -295,6 +295,9 @@ namespace VarletUi
                     }
                 }
             }
+
+            // Change Windows DNS
+            // Utilities.SetDnsResolver(Utilities.GetActiveNic, "127.0.0.1");
         }
 
         private void StoppingServices()
@@ -344,6 +347,9 @@ namespace VarletUi
                     }
                 }
             }
+
+            // Change Windows DNS
+            // Utilities.SetDnsResolver(Utilities.GetActiveNic);
         }
 
         private void ChangePhpVersion()

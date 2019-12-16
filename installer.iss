@@ -1,4 +1,4 @@
-; by Aris Ripandi - 2019
+; (c) 2019 - Aris Ripandi
 
 #define BasePath      ""
 #define AppName       "Varlet"
@@ -65,8 +65,8 @@ Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
 [Run]
 Filename: "{tmp}\vcredis2012x64.exe"; Parameters: "/install /quiet /norestart"; Description: "Installing VCRedist 2012"; Flags: waituntilterminated; Check: VCRedist2012NotInstalled
 Filename: "{tmp}\vcredis1519x64.exe"; Parameters: "/install /quiet /norestart"; Description: "Installing VCRedist 2015"; Flags: waituntilterminated; Check: VCRedist2015NotInstalled
-; Filename: "{app}\VarletUi.exe"; Description: "Run Varlet Controller"; Flags: postinstall shellexec skipifsilent ; BeforeInstall: StartAppServices
 Filename: "http://localhost/phpinfo"; Description: "Display PHP info page"; Flags: postinstall shellexec runasoriginaluser; Check: IsHttpServicesRunning
+; Filename: "{app}\VarletUi.exe"; Description: "Run Varlet Controller"; Flags: postinstall skipifsilent; BeforeInstall: StartAppServices
 
 [Dirs]
 Name: {app}\tmp; Flags: uninsalwaysuninstall
@@ -116,6 +116,7 @@ begin
       if IsAppRunning('VarletUi.exe') then TaskKillByPid('VarletUi.exe');
       if IsAppRunning('varlet.exe') then TaskKillByPid('varlet.exe');
       if IsServiceRunning('VarletHttpd') then KillService('VarletHttpd');
+      if IsServiceRunning('AcrylicDNSProxySvc') then KillService('AcrylicDNSProxySvc');
       if IsServiceRunning('VarletMailhog') then KillService('VarletMailhog');
     end;
   end;
@@ -144,10 +145,6 @@ begin
   Exec(BaseDir + '\utils\mkcert.exe', Str, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Exec(BaseDir + '\utils\mkcert.exe', '-install', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
-  // httpd conf
-  FileReplaceString(BaseDir + '\pkg\httpd\conf\httpd.conf', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
-  FileReplaceString(BaseDir + '\pkg\acrylic\AcrylicConfiguration.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
-
   // PHP 7.2
   FileReplaceString(BaseDir + '\pkg\php\php-7.2-ts\php.ini', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
   FileReplaceString(BaseDir + '\pkg\php\php-7.2-ts\php.ini', '<<PHP_BASEDIR>>', PathWithSlashes(BaseDir + '\pkg\php\php-7.2-ts'));
@@ -165,8 +162,9 @@ begin
   SaveStringToFile(BaseDir + '\utils\composer.bat', Str, False);
 end;
 
-procedure CreatePathEnvironment();
+procedure CreatePathEnvironment;
 begin
+  WizardForm.StatusLabel.Caption := 'Adding PATH environment variables ...';
   EnvAddPath(ExpandConstant('{app}\utils'));
   EnvAddPath(ExpandConstant('{app}\pkg\httpd\bin'));
   EnvAddPath(ExpandConstant('{app}\pkg\imagick\bin'));
@@ -187,9 +185,56 @@ end;
 
 procedure StartAppServices;
 begin
-  Exec(ExpandConstant('net.exe'), 'start VarletMailhog', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('net.exe'), 'start VarletHttpd', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  // ShellExec('open', 'http://localhost/', '', '', SW_SHOW, ewNoWait, ResultCode);
+  Exec(ExpandConstant('net.exe'), 'start AcrylicDNSProxySvc', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('net.exe'), 'start VarletMailhog', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+
+procedure InstallHttpdService;
+var HttpdBin : String;
+begin
+  BaseDir := ExpandConstant('{app}');
+  HttpdBin := BaseDir + '\pkg\httpd\bin\httpd.exe';
+
+  WizardForm.StatusLabel.Caption := 'Installing Apache Web Server ...';
+  FileReplaceString(BaseDir + '\pkg\httpd\conf\httpd.conf', '<<INSTALL_DIR>>', PathWithSlashes(ExpandConstant('{app}')));
+  Str := '-k install -n "VarletHttpd" -f '+BaseDir+'"\pkg\httpd\conf\httpd.conf"';
+
+  Exec(HttpdBin, Str, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  if WizardIsTaskSelected('task_autorun_service') then begin
+    Exec(ExpandConstant('sc.exe'), 'config VarletHttpd start=auto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end else begin
+    Exec(ExpandConstant('sc.exe'), 'config VarletHttpd start=demand', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
+  Exec(ExpandConstant('net.exe'), 'stop VarletHttpd', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+
+procedure InstallDNSResolverService;
+begin
+  BaseDir := ExpandConstant('{app}');
+  WizardForm.StatusLabel.Caption := 'Installing DNS Resolver ...';
+  FileReplaceString(BaseDir + '\pkg\acrylic\AcrylicConfiguration.ini', '<<INSTALL_DIR>>', ExpandConstant('{app}'));
+  Exec(BaseDir + '\pkg\acrylic\AcrylicUI.exe', 'InstallAcrylicService', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  if WizardIsTaskSelected('task_autorun_service') then begin
+    Exec(ExpandConstant('sc.exe'), 'config AcrylicDNSProxySvc start=auto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end else begin
+    Exec(ExpandConstant('sc.exe'), 'config AcrylicDNSProxySvc start=demand', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
+  Exec(ExpandConstant('net.exe'), 'stop AcrylicDNSProxySvc', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+
+procedure InstallMailhogService;
+begin
+  BaseDir := ExpandConstant('{app}');
+  WizardForm.StatusLabel.Caption := 'Installing Mailhog services ...';
+  FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<INSTALL_DIR>>', ExpandConstant('{app}'));
+  if WizardIsTaskSelected('task_autorun_service') then begin
+    FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<SERVICE_MODE>>', 'Automatic');
+  end else begin
+    FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<SERVICE_MODE>>', 'Manual');
+  end;
+  Exec(BaseDir + '\pkg\mailhog\mailhogservice.exe', 'install', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('net.exe'), 'stop VarletMailhog', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
@@ -200,49 +245,19 @@ begin
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
-var HttpdBin : String;
 begin
-  BaseDir := ExpandConstant('{app}');
-  HttpdBin := BaseDir + '\pkg\httpd\bin\httpd.exe';
-
+  // When installing
   if CurStep = ssPostInstall then begin
-
     WizardForm.StatusLabel.Caption := 'Setting up application configuration ...';
     ConfigureApplication;
-
-    if WizardIsTaskSelected('task_add_path_envars') then begin
-      WizardForm.StatusLabel.Caption := 'Adding PATH environment variables ...';
-      CreatePathEnvironment;
-    end;
-
-    // Apache Web Server
-    WizardForm.StatusLabel.Caption := 'Installing Apache Web Server ...';
-    Str := '-k install -n "VarletHttpd" -f '+BaseDir+'"\pkg\httpd\conf\httpd.conf"';
-    Exec(HttpdBin, Str, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    if WizardIsTaskSelected('task_autorun_service') then begin
-      Exec(ExpandConstant('sc.exe'), 'config VarletHttpd start=auto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      Exec(ExpandConstant('net.exe'), 'start VarletHttpd', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    end else begin
-      Exec(ExpandConstant('sc.exe'), 'config VarletHttpd start=demand', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      Exec(ExpandConstant('net.exe'), 'stop VarletHttpd', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    end;
-
-    // Mailhog service
-    if WizardIsTaskSelected('task_install_mailhog') then begin
-      WizardForm.StatusLabel.Caption := 'Installing Mailhog services ...';
-      FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<INSTALL_DIR>>', ExpandConstant('{app}'));
-      if WizardIsTaskSelected('task_autorun_service') then begin
-        FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<SERVICE_MODE>>', 'Automatic');
-      end else begin
-        FileReplaceString(BaseDir + '\pkg\mailhog\mailhogservice.xml', '<<SERVICE_MODE>>', 'Manual');
-      end;
-      Exec(BaseDir + '\pkg\mailhog\mailhogservice.exe', 'install', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      Exec(ExpandConstant('net.exe'), 'stop VarletMailhog', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    end;
+    InstallHttpdService;
+    InstallDNSResolverService;
+    if WizardIsTaskSelected('task_install_mailhog') then InstallMailhogService;
+    if WizardIsTaskSelected('task_add_path_envars') then CreatePathEnvironment;
   end;
-
+  // When it's done
   if (CurStep=ssDone) then begin
-    StartAppServices;
+    if WizardIsTaskSelected('task_autorun_service') then StartAppServices;
     ShellExec('open', ExpandConstant('{app}\VarletUi.exe'), '', '', SW_SHOW, ewNoWait, ResultCode);
   end;
 end;
@@ -253,6 +268,7 @@ begin
     usUninstall:
       begin
         KillService('VarletHttpd');
+        KillService('AcrylicDNSProxySvc');
         KillService('VarletMailhog');
         TaskKillByPid('VarletUi.exe');
         TaskKillByPid('varlet.exe');
@@ -261,6 +277,7 @@ begin
     usPostUninstall:
       begin
         // MsgBox(ExpandConstant('{#AppName}') + ' has been uninstalled!', mbInformation, MB_OK);
+        // ShellExec('open', 'https://varlet.dev/goodbye', '', '', SW_SHOW, ewNoWait, ResultCode);
       end;
   end;
 end;
