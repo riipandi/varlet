@@ -56,7 +56,7 @@ namespace Variety
             return GetFullPath(fileName) != null;
         }
 
-        public static string GetFullPath(string fileName)
+        private static string GetFullPath(string fileName)
         {
             if (File.Exists(fileName))
                 return Path.GetFullPath(fileName);
@@ -90,8 +90,9 @@ namespace Variety
 
             var objMc = new ManagementClass("Win32_NetworkAdapterConfiguration");
             var objMoc = objMc.GetInstances();
-            foreach (ManagementObject objMo in objMoc)
+            foreach (var o in objMoc)
             {
+                var objMo = (ManagementObject) o;
                 if (!(bool) objMo["IPEnabled"]) continue;
                 if (!objMo["Description"].ToString().Equals(currentInterface.Description)) continue;
                 var objdns = objMo.GetMethodParameters("SetDNSServerSearchOrder");
@@ -108,8 +109,9 @@ namespace Variety
 
             var objMc = new ManagementClass("Win32_NetworkAdapterConfiguration");
             var objMoc = objMc.GetInstances();
-            foreach (ManagementObject objMo in objMoc)
+            foreach (var o in objMoc)
             {
+                var objMo = (ManagementObject) o;
                 if (!(bool) objMo["IPEnabled"]) continue;
                 if (!objMo["Description"].ToString().Equals(currentInterface.Description)) continue;
                 var objdns = objMo.GetMethodParameters("SetDNSServerSearchOrder");
