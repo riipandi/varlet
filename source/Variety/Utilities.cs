@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Management;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace Variety
@@ -69,14 +72,51 @@ namespace Variety
             return null;
         }
 
-        // public static string GetActiveNic()
-        // {
-        //     // do something
-        // }
+        private static NetworkInterface GetActiveNic()
+        {
+            var nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+                a => a.OperationalStatus == OperationalStatus.Up &&
+                     (a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || a.NetworkInterfaceType == NetworkInterfaceType.Ethernet) &&
+                     a.GetIPProperties().GatewayAddresses.Any(g => g.Address.AddressFamily.ToString() == "InterNetwork"));
 
-        // public static void SetDnsResolver(string activeNic, string primaryDns = "dhcp", string secondaryDns = null)
-        // {
-        //     // do something
-        // }
+            return nic;
+        }
+
+        public static void SetDnsResolver(string dnsString)
+        {
+            string[] dns = { dnsString };
+            var currentInterface = GetActiveNic();
+            if (currentInterface == null) return;
+
+            var objMc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            var objMoc = objMc.GetInstances();
+            foreach (ManagementObject objMo in objMoc)
+            {
+                if (!(bool) objMo["IPEnabled"]) continue;
+                if (!objMo["Description"].ToString().Equals(currentInterface.Description)) continue;
+                var objdns = objMo.GetMethodParameters("SetDNSServerSearchOrder");
+                if (objdns == null) continue;
+                objdns["DNSServerSearchOrder"] = dns;
+                objMo.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+            }
+        }
+
+        public static void UnsetDnsResolver()
+        {
+            var currentInterface = GetActiveNic();
+            if (currentInterface == null) return;
+
+            var objMc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            var objMoc = objMc.GetInstances();
+            foreach (ManagementObject objMo in objMoc)
+            {
+                if (!(bool) objMo["IPEnabled"]) continue;
+                if (!objMo["Description"].ToString().Equals(currentInterface.Description)) continue;
+                var objdns = objMo.GetMethodParameters("SetDNSServerSearchOrder");
+                if (objdns == null) continue;
+                objdns["DNSServerSearchOrder"] = null;
+                objMo.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+            }
+        }
     }
 }

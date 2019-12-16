@@ -74,6 +74,8 @@ namespace VarletUi
                     cmbPhpVersion.Enabled = false;
                     lblApacheConfig.Enabled = false;
                     lblPhpIni.Enabled = false;
+                    if (Services.IsInstalled(References.ServiceNameDnsResolver))
+                        Utilities.SetDnsResolver("127.0.0.1");
                 }
             }
 
@@ -97,6 +99,8 @@ namespace VarletUi
                     lblMailhogLog.Enabled = true;
                 }
             }
+
+            if (btnServices.Text == "Start Services") Utilities.UnsetDnsResolver();
         }
 
         public void lblSetting_Click(object sender, EventArgs e)
@@ -223,7 +227,6 @@ namespace VarletUi
             foreach(var file in files ) {
                 var domain = file.Name.Replace("auto.", "").Replace(".conf", "");
                 if (!DnsHostfile.IsNotExists(domain)) DnsHostfile.DeleteRecord(domain);
-                if (!Hostfile.IsNotExists(domain)) Hostfile.DeleteRecord(domain);
                 File.Delete(file.FullName);
             }
 
@@ -238,7 +241,6 @@ namespace VarletUi
                 VirtualHost.CreateCert(domain);
                 VirtualHost.CreateVhost(domain, dirPath, true);
                 if (DnsHostfile.IsNotExists(domain)) DnsHostfile.AddRecord(domain);
-                if (Hostfile.IsNotExists(domain)) Hostfile.AddRecord(domain);
             }
             VirtualHost.SetDefaultVhost();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -291,9 +293,6 @@ namespace VarletUi
                     }
                 }
             }
-
-            // Change Windows DNS
-            // Utilities.SetDnsResolver(Utilities.GetActiveNic, "127.0.0.1");
         }
 
         private void StoppingServices()
@@ -341,9 +340,6 @@ namespace VarletUi
                     }
                 }
             }
-
-            // Change Windows DNS
-            // Utilities.SetDnsResolver(Utilities.GetActiveNic);
         }
 
         private void ChangePhpVersion()

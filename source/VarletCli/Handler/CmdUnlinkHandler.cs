@@ -36,7 +36,6 @@ namespace VarletCli.Handler
             ColorizeConsole.PrintlnInfo($"\n> Removing virtualhost ...");
             File.Delete(vhostFile);
             if (!DnsHostfile.IsNotExists(givenDomain)) DnsHostfile.DeleteRecord(givenDomain);
-            if (!Hostfile.IsNotExists(givenDomain)) Hostfile.DeleteRecord(givenDomain);
 
             ColorizeConsole.PrintlnInfo($"\n> Reloading services ...");
             Services.Reload(References.ServiceNameHttp);
