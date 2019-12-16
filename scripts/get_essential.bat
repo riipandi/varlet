@@ -56,6 +56,18 @@ if not exist "%TMPDIR%\mkcert.exe" (
 )
 if exist "%TMPDIR%\mkcert.exe" ( copy /Y "%TMPDIR%\mkcert.exe" "%ODIR%\utils\mkcert.exe" > nul )
 
+:: Acrylic DNS
+if not exist "%TMPDIR%\acrylicdns.zip" (
+  echo. && echo ^> Downloading Acrylic DNS v%ver_acrylicdns% ...
+  %CURL% -L# "https://excellmedia.dl.sourceforge.net/project/acrylic/Acrylic/%ver_acrylicdns%/Acrylic-Portable.zip" -o "%TMPDIR%\acrylicdns.zip"
+)
+if exist "%TMPDIR%\acrylicdns.zip" (
+  echo. && echo ^> Extracting Acrylic DNS v%ver_acrylicdns% ...
+  if exist "%ODIR%\pkg\acrylicdns" RD /S /Q "%ODIR%\pkg\acrylicdns"
+  %UNZIP% x "%TMPDIR%\acrylicdns.zip" -o"%ODIR%\pkg\acrylicdns" -y > nul
+  copy /Y "%STUB%\config\AcrylicConfiguration.ini" "%ODIR%\pkg\acrylicdns\AcrylicConfiguration.ini" > nul
+)
+
 :: ngrok
 if not exist "%TMPDIR%\ngrok-amd64.zip" (
   echo. && echo ^> Downloading Ngrok ...

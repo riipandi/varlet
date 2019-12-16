@@ -26,6 +26,7 @@ set "ver_adminer=4.7.5"
 set "ver_mailhog=1.0.0"
 set "ver_mhsendmail=0.2.0"
 set "ver_phpmyadmin=4.9.2"
+set "ver_acrylicdns=1.1.1"
 
 :: Download link
 set "url_php72=https://windows.php.net/downloads/releases/php-%ver_php72%-Win32-VC15-x64.zip"
@@ -138,6 +139,7 @@ if exist "%programfiles(x86)%\Microsoft Visual Studio\2019\BuildTools\MSBuild" (
 )
 for /R "%ODIR%" %%G in (*.pdb) do "cmd /c del /F %%G"
 for /R "%ODIR%" %%G in (*.exe.config) do "cmd /c del /F %%G"
+for /R "%ODIR%" %%G in (*.exe.manifest) do "cmd /c del /F %%G"
 for /R "%ODIR%" %%G in (INIFileParser*.xml) do "cmd /c del /F %%G"
 for /R "%ODIR%" %%G in (Semver*.xml) do "cmd /c del /F %%G"
 for /R "%ODIR%" %%G in (Serilog*.xml) do "cmd /c del /F %%G"
