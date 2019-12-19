@@ -1,0 +1,42 @@
+[version]
+signature="$CHICAGO$"
+
+[NotepadContextInstall]
+CopyFiles = NotepadContext.Files.Inf
+AddReg    = NotepadContext.AddReg
+
+[DefaultInstall]
+CopyFiles = NotepadContext.Files.Inf
+AddReg    = NotepadContext.AddReg
+
+[DefaultUnInstall]
+DelFiles  = NotepadContext.Files.Inf
+DelReg    = NotepadContext.DelReg
+
+[SourceDisksNames]
+55="Open with Notepad","",1
+
+[SourceDisksFiles]
+NotepadContext.INF=55
+
+[DestinationDirs]
+NotepadContext.Files.Inf = 17
+
+[NotepadContext.Files.Inf]
+NotepadContext.INF
+
+[NotepadContext.AddReg]
+HKLM,%UDHERE%,DisplayName,,"%NotepadContextName%"
+HKLM,%UDHERE%,UninstallString,,"rundll32.exe syssetup.dll, SetupInfObjectInstallAction DefaultUninstall 132 %17%\NotepadContext.inf"
+HKCR,*\Shell\runas,,,"%NotepadContextAccel%"
+HKCR,*\Shell\runas\command,,,"%11%\notepad.exe ""%1"""
+
+[NotepadContext.DelReg]
+HKLM,%UDHERE%
+HKCR,Directory\Shell\runas
+HKCR,Drive\Shell\runas
+
+[Strings]
+NotepadContextName="Open with Notepad PowerToy"
+NotepadContextAccel="Open with Notepad"
+UDHERE="Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadContext"

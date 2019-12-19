@@ -52,10 +52,13 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 Name: task_add_path_envars; Description: "Add PATH environment variables";
 Name: task_autorun_service; Description: "Run services when Windows starts"; Flags: unchecked
 Name: task_install_mailhog; Description: "Install Mailhog SMTP Testing"; Flags: unchecked
+;Name: task_notepad_context; Description: "Add Open With Notepad Context Menu"; Flags: unchecked
 
 [Files]
-Source: "{#BasePath}_dst64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "{#BasePath}_tmpdir\vcredis\*"; DestDir: {tmp}; Flags: ignoreversion deleteafterinstall
+Source: "{#BasePath}_dst64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "{#BasePath}_dst64\pkg\httpd\conf\ports.conf"; DestDir: "{app}\pkg\httpd\conf"; Flags: onlyifdoesntexist
+Source: "{#BasePath}stubs\config\NotepadContext.inf"; DestDir: {tmp}; Flags: ignoreversion deleteafterinstall
 
 [Icons]
 Name: "{group}\VarletUi"; Filename: "{app}\VarletUi.exe"
@@ -66,6 +69,7 @@ Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
 Filename: "{tmp}\vcredis2012x64.exe"; Parameters: "/install /quiet /norestart"; Description: "Installing VCRedist 2012"; Flags: waituntilterminated; Check: VCRedist2012NotInstalled
 Filename: "{tmp}\vcredis1519x64.exe"; Parameters: "/install /quiet /norestart"; Description: "Installing VCRedist 2015"; Flags: waituntilterminated; Check: VCRedist2015NotInstalled
 Filename: "http://localhost/phpinfo"; Description: "Display PHP info page"; Flags: postinstall shellexec runasoriginaluser; Check: IsHttpServicesRunning
+Filename: "{sys}\rundll32.exe"; Parameters: "setupapi,InstallHinfSection DefaultInstall 128 {tmp}\NotepadContext.inf"; Flags: shellexec 32bit
 ; Filename: "{app}\VarletUi.exe"; Description: "Run Varlet Controller"; Flags: postinstall skipifsilent; BeforeInstall: StartAppServices
 
 [Dirs]
