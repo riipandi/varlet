@@ -50,6 +50,7 @@ namespace VarletUi
                 (new TrayContext()).ShowTrayIconNotification();
                 Hide();
             } else {
+                Utilities.UnsetDnsResolver();
                 Application.ExitThread();
             }
         }
