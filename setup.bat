@@ -27,6 +27,7 @@ set "ver_mailhog=1.0.0"
 set "ver_mhsendmail=0.2.0"
 set "ver_phpmyadmin=4.9.2"
 set "ver_acrylicdns=1.1.1"
+set "ver_winacme=2.1.2.641"
 
 :: Download link
 set "url_php72=https://windows.php.net/downloads/releases/php-%ver_php72%-Win32-VC15-x64.zip"
@@ -91,6 +92,7 @@ call %ROOT%\scripts\get_php74.bat
 call %ROOT%\scripts\get_ioncube.bat
 call %ROOT%\scripts\get_imagick.bat
 call %ROOT%\scripts\get_essential.bat
+call %ROOT%\scripts\get_winacme.bat
 
 echo. && echo ^> Include extra utilities ...
 copy /Y "%ROOT%\utils\7za.dll" "%ODIR%\utils\7za.dll" > nul

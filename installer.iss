@@ -170,6 +170,7 @@ procedure CreatePathEnvironment;
 begin
   WizardForm.StatusLabel.Caption := 'Adding PATH environment variables ...';
   EnvAddPath(ExpandConstant('{app}\utils'));
+  EnvAddPath(ExpandConstant('{app}\pkg\winacme'));
   EnvAddPath(ExpandConstant('{app}\pkg\httpd\bin'));
   EnvAddPath(ExpandConstant('{app}\pkg\imagick\bin'));
   EnvAddPath(ExpandConstant('{app}\pkg\php\php-7.4-ts'));
@@ -180,6 +181,7 @@ end;
 procedure RemovePathEnvironment;
 begin
   EnvRemovePath(ExpandConstant('{app}\utils'));
+  EnvRemovePath(ExpandConstant('{app}\pkg\winacme'));
   EnvRemovePath(ExpandConstant('{app}\pkg\httpd\bin'));
   EnvRemovePath(ExpandConstant('{app}\pkg\imagick\bin'));
   EnvRemovePath(ExpandConstant('{app}\pkg\php\php-7.4-ts'));
